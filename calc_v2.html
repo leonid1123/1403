@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style_v2.css">
+    <title>Calc v2</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <p id="history" onclick="FullHistory()">history here</p>
+        <p id="res">result here</p>
+        <button>x&#178;</button>
+        <button>&#8543;x</button>
+        <button>&#8730;x</button>
+        <button>CE</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>*</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>-</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>+</button>
+        <button>+/-</button>
+        <button>0</button>
+        <button>.</button>
+        <button>=</button>
+    </div>
+    <div id="fullHistory">
+        
+    </div>
+    <script>
+        let show = true;
+        var x = document.getElementsByTagName("button");
+        var res = document.getElementById("res");
+        for (var i = 0; i < x.length; i++) {
+            x[i].addEventListener("click", this.num.bind(this) , false);
+        }
+        function num(btn) {
+            var info = btn.explicitOriginalTarget.childNodes[0].data;
+            console.log(info);
+            var infoCheck = parseFloat(info);
+            if (!Number.isNaN(infoCheck)){
+                res.innerHTML+=info;
+            } else {
+                //console.log("not a number");
+            }
+            switch(info) {
+                case "CE":
+                    cl();
+                    break;
+                case "+/-":
+                    var a = res.innerHTML * (-1);
+                    res.innerHTML = a;
+                break;
+                case "⅟x":
+                    //console.log("1/x")
+                    var a = 1/res.innerHTML;
+                    res.innerHTML = a;
+                break;
+                case "√x": 
+                    var a = Math.sqrt(res.innerHTML);
+                    res.innerHTML = a;
+                break;
+            }
+        }
+        function cl() {
+            res.innerHTML="0";
+        }
+        function FullHistory() {
+            let k = document.getElementById("fullHistory");
+            if (show) {
+                k.style.display="none";
+                show = false;
+            } else {
+                k.style.display = "block";
+                show = true;
+            }
+
+        }
+    </script>
+</body>
+
+</html>

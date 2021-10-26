@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Калькулятор на JS</h1>
+    <div id="view">
+        <p id="history"></p>
+        <p id="res">0</p>
+    </div>
+    <div class="row">
+        <div class="column">
+          <button onclick="one(this)">1</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">2</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">3</button>
+        </div>
+        <div class="column">
+            <button onclick = "MainCalc_oper(this)">+</button>
+        </div>
+        <div class="column">
+            <button onclick="delOne()">&#8618</button>
+        </div>
+        <div class="column">
+            <button onclick="delOne()">&#8618</button>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="column">
+          <button onclick="one(this)">4</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">5</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">6</button>
+        </div>
+        <div class="column">
+            <button onclick = "MainCalc_oper(this)">-</button>
+        </div>
+        <div class="column">
+            <button onclick="koren()">&radic; x</button>
+        </div>
+        <div class="column">
+            <button onclick = "kvadrat()">x<sup>2</sup></button>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="column">
+          <button onclick="one(this)">7</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">8</button>
+        </div>
+        <div class="column">
+            <button onclick="one(this)">9</button>
+        </div>
+        <div class="column">
+            <button onclick = "MainCalc_oper(this)">*</button>
+        </div>
+        <div class="column">
+            <button onclick="obratnoe()">1/x</button>
+        </div>
+        <div class="column">
+            <button onclick="znakCh()">+/-</button>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="column">
+          <button onclick="one(this)">0</button>
+        </div>
+        <div class="column">
+            <button onclick="dot1()">.</button>
+        </div>
+        <div class="column">
+            <button onclick="MainCalc_result(oper,f_num,res.innerHTML)">=</button>
+        </div>
+        <div class="column">
+            <button onclick = "MainCalc_oper(this)">/</button>
+        </div>
+        <div class="column">
+            <button onclick="delAll()">CE</button>
+        </div>
+        <div class="column">
+            <button onclick="delAll()">CE</button>
+        </div>
+      </div> 
+      todo<br>
+	  <p>поправить историю при последовательных действиях</p>
+      <p>обработка кнопок корень, степень и проч. в истории</p>
+	  <p>оптимизировать код</p>
+      <p>поправить кнопки на 2 ячейки</p>
+      <p>дизайн))))</p>
+
+      <script>
+          let res = document.getElementById("res");
+          let history = document.getElementById("history");
+          let f_num;
+          let s_num;
+          let oper;
+          let history_full=false;
+		  let clicks = 0;
+
+          function one(a) { //цифры
+            if (history_full) {
+                history.innerHTML="";
+                res.innerHTML="";
+                history_full = false;
+            }
+            if (res.innerHTML=="0") {
+                res.innerHTML=""
+            }
+            res.innerHTML+=a.innerHTML
+          }
+          function delAll(){ //стереть всё
+            res.innerHTML = '0'
+          }
+          function delOne(){ //стереть один символ
+            let tmp = res.innerHTML;
+            if (tmp.length>1) {
+                res.innerHTML = tmp.slice(0,tmp.length-1);
+            } else {
+                res.innerHTML = "0";
+            }
+        }
+        function dot1(){//поставить точку с проверкой на наличие точки уже
+            if (!res.innerHTML.includes(".")){
+                res.innerHTML+="."
+            }
+        }
+        function kvadrat(){
+            let x = res.innerHTML
+            x = Math.pow(x,2)
+            res.innerHTML = x;
+        }
+        function koren(){
+            let x = res.innerHTML
+            if (x>0) {
+            x = Math.sqrt(x)
+            res.innerHTML = x;
+            } else {
+                alert("неа!!!")
+            }
+        }
+        function znakCh(){
+            let x = res.innerHTML
+            x = x*(-1)
+            res.innerHTML = x;
+        }
+        function obratnoe(){
+            let x = res.innerHTML
+            x = 1/x
+            res.innerHTML = x;
+        }
+        function MainCalc_oper(a){
+			if (clicks<1) {
+				f_num = res.innerHTML;
+				oper = a.innerHTML;
+				res.innerHTML = "0";
+				history.innerHTML="";
+				history.innerHTML = f_num+" "+oper+" ";
+				clicks++;
+				console.log(clicks);
+			}else if (clicks>=1) {
+				MainCalc_result(oper,f_num,res.innerHTML);
+				oper = a.innerHTML;
+				clicks=0;
+			}
+			
+        }
+        function MainCalc_result(a_oper,b_f_num,c_s_num){
+            //s_num = c_s_num;
+            console.log(a_oper);
+            console.log(b_f_num);
+            console.log(c_s_num);
+            let z;
+            switch (a_oper){
+                case "+":
+                    z=Number(b_f_num)+Number(c_s_num);
+                break;
+                case "-":
+                    z=b_f_num-c_s_num;
+                break;
+                case "*":
+                    z=b_f_num*c_s_num;
+                break;
+                case "/":
+                    z=b_f_num/c_s_num;
+                break;
+            }
+            res.innerHTML = "";
+            res.innerHTML = z;
+            history.innerHTML+=c_s_num+" = "+z;
+            history_full=true;
+            oper=null;
+            f_num=null;
+			s_num=null;
+        }
+      </script>
+</body>
+</html>
+
+

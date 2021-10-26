@@ -1,0 +1,22 @@
+.wrapper {
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    display: flex;
+    flex-wrap: wrap;
+}
+button {
+    flex-basis: 100px;
+    flex-grow: 1;
+}
+#history, #res {
+    flex-basis: 456px;
+}
+#fullHistory {
+    display: block;
+    width: 30%;
+    margin-left: 35%;
+    margin-right: 35%;
+    height: 100px;
+    background-color: gray;
+}
