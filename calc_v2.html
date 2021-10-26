@@ -34,57 +34,57 @@
         <button>.</button>
         <button>=</button>
     </div>
-    <div id="fullHistory">
-        
-    </div>
+    <!--<div id="fullHistory"></div>-->
     <script>
         let show = true;
         var x = document.getElementsByTagName("button");
         var res = document.getElementById("res");
         for (var i = 0; i < x.length; i++) {
-            x[i].addEventListener("click", this.num.bind(this) , false);
+            x[i].addEventListener("click", this.num.bind(this), false);
         }
         function num(btn) {
             var info = btn.explicitOriginalTarget.childNodes[0].data;
             console.log(info);
             var infoCheck = parseFloat(info);
-            if (!Number.isNaN(infoCheck)){
-                res.innerHTML+=info;
+            if (!Number.isNaN(infoCheck)) {
+                res.innerHTML += info;
             } else {
                 //console.log("not a number");
             }
-            switch(info) {
+            switch (info) {
                 case "CE":
                     cl();
                     break;
                 case "+/-":
                     var a = res.innerHTML * (-1);
                     res.innerHTML = a;
-                break;
+                    break;
                 case "⅟x":
                     //console.log("1/x")
-                    var a = 1/res.innerHTML;
+                    var a = 1 / res.innerHTML;
                     res.innerHTML = a;
-                break;
-                case "√x": 
+                    break;
+                case "√x":
                     var a = Math.sqrt(res.innerHTML);
                     res.innerHTML = a;
-                break;
+                    break;
             }
         }
         function cl() {
-            res.innerHTML="0";
+            res.innerHTML = "0";
         }
         function FullHistory() {
-            let k = document.getElementById("fullHistory");
             if (show) {
-                k.style.display="none";
-                show = false;
+                let a1 = document.createElement("div");
+                a1.id = "fullHistory";
+                let p1 = document.getElementsByClassName("wrapper");
+                p1[0].after(a1);
+                a1.innerHTML = "сюда историю";
+                show=false;
             } else {
-                k.style.display = "block";
-                show = true;
+                document.getElementById("fullHistory").remove();
+                show=true;
             }
-
         }
     </script>
 </body>
